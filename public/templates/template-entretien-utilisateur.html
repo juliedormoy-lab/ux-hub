@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grille d'entretien utilisateur - UX Hub</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+    .header { border-bottom: 3px solid #6366f1; padding-bottom: 20px; margin-bottom: 30px; }
+    .header h1 { color: #6366f1; font-size: 24px; margin-bottom: 5px; }
+    .header p { color: #666; font-size: 14px; }
+    .section { margin-bottom: 30px; }
+    .section-title { background: #f3f4f6; padding: 10px 15px; font-weight: 600; color: #374151; margin-bottom: 15px; border-left: 4px solid #6366f1; }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-weight: 500; margin-bottom: 5px; color: #4b5563; }
+    .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 4px; font-size: 14px; }
+    .form-group textarea { min-height: 80px; resize: vertical; }
+    .questions-list { list-style: none; }
+    .questions-list li { padding: 15px; border: 1px solid #e5e7eb; margin-bottom: 10px; border-radius: 8px; }
+    .questions-list li .question { font-weight: 500; color: #1f2937; margin-bottom: 5px; }
+    .questions-list li .notes { border: none; border-bottom: 1px dashed #d1d5db; width: 100%; padding: 5px 0; font-size: 14px; }
+    .tips { background: #fef3c7; padding: 15px; border-radius: 8px; margin-top: 20px; }
+    .tips h4 { color: #92400e; margin-bottom: 10px; }
+    .tips ul { margin-left: 20px; color: #78350f; font-size: 14px; }
+    .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e7eb; text-align: center; color: #9ca3af; font-size: 12px; }
+    @media print { body { padding: 20px; } .tips { break-inside: avoid; } }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>📋 Grille d'entretien utilisateur</h1>
+    <p>Template UX Hub - Méthode : Entretiens utilisateurs</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Informations générales</div>
+    <div class="form-group">
+      <label>Projet :</label>
+      <input type="text" placeholder="Nom du projet">
+    </div>
+    <div class="form-group">
+      <label>Date de l'entretien :</label>
+      <input type="text" placeholder="JJ/MM/AAAA">
+    </div>
+    <div class="form-group">
+      <label>Participant (prénom ou ID) :</label>
+      <input type="text" placeholder="Ex: Participant 1">
+    </div>
+    <div class="form-group">
+      <label>Profil / Rôle :</label>
+      <input type="text" placeholder="Ex: Utilisateur quotidien, Nouveau client...">
+    </div>
+    <div class="form-group">
+      <label>Durée prévue :</label>
+      <input type="text" placeholder="Ex: 45 minutes">
+    </div>
+    <div class="form-group">
+      <label>Interviewer :</label>
+      <input type="text" placeholder="Votre nom">
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">1. Introduction (5 min)</div>
+    <ul class="questions-list">
+      <li>
+        <div class="question">Présentation et mise en contexte</div>
+        <p style="font-size: 13px; color: #666; margin-bottom: 10px;">Remerciements, explication du but de l'entretien, demande de consentement pour enregistrement</p>
+        <input class="notes" type="text" placeholder="Notes...">
+      </li>
+      <li>
+        <div class="question">Pouvez-vous vous présenter brièvement ? (rôle, contexte d'utilisation)</div>
+        <input class="notes" type="text" placeholder="Notes...">
+      </li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">2. Contexte et habitudes (10 min)</div>
+    <ul class="questions-list">
+      <li>
+        <div class="question">Parlez-moi de votre journée type. Comment [sujet] s'intègre-t-il dans votre quotidien ?</div>
+        <input class="notes" type="text" placeholder="Notes...">
+      </li>
+      <li>
+        <div class="question">Quels outils/méthodes utilisez-vous actuellement pour [tâche] ?</div>
+        <input class="notes" type="text" placeholder="Notes...">
+      </li>
+      <li>
+        <div class="question">À quelle fréquence réalisez-vous cette activité ?</div>
+        <input class="notes" type="text" placeholder="Notes...">
+      </li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">3. Besoins et frustrations (15 min)</div>
+    <ul class="questions-list">
+      <li>
+        <div class="question">Qu'est-ce qui fonctionne bien dans votre façon actuelle de faire ?</div>
+        <input class="notes" type="text" placeholder="Notes...">
+      </li>
+      <li>
+        <div class="question">Quelles difficultés rencontrez-vous ? Pouvez-vous me donner un exemple concret ?</div>
+        <input class="notes" type="text" placeholder="Notes...">
+      </li>
+      <li>
+        <div class="question">Qu'est-ce qui vous fait perdre du temps ou vous frustre ?</div>
+        <input class="notes" type="text" placeholder="Notes...">
+      </li>
+      <li>
+        <div class="question">Avez-vous trouvé des solutions de contournement ? Lesquelles ?</div>
+        <input class="notes" type="text" placeholder="Notes...">
+      </li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">4. Attentes et idéal (10 min)</div>
+    <ul class="questions-list">
+      <li>
+        <div class="question">Dans un monde idéal, comment aimeriez-vous que cela fonctionne ?</div>
+        <input class="notes" type="text" placeholder="Notes...">
+      </li>
+      <li>
+        <div class="question">Qu'est-ce qui vous ferait gagner le plus de temps/efficacité ?</div>
+        <input class="notes" type="text" placeholder="Notes...">
+      </li>
+      <li>
+        <div class="question">Y a-t-il des fonctionnalités que vous aimeriez avoir ?</div>
+        <input class="notes" type="text" placeholder="Notes...">
+      </li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">5. Conclusion (5 min)</div>
+    <ul class="questions-list">
+      <li>
+        <div class="question">Y a-t-il autre chose que vous aimeriez partager ?</div>
+        <input class="notes" type="text" placeholder="Notes...">
+      </li>
+      <li>
+        <div class="question">Avez-vous des questions pour moi ?</div>
+        <input class="notes" type="text" placeholder="Notes...">
+      </li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Synthèse post-entretien</div>
+    <div class="form-group">
+      <label>Insights clés (3-5 points) :</label>
+      <textarea placeholder="Listez les principaux apprentissages..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Verbatims marquants :</label>
+      <textarea placeholder="Citations exactes importantes..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Points à creuser :</label>
+      <textarea placeholder="Questions pour les prochains entretiens..."></textarea>
+    </div>
+  </div>
+
+  <div class="tips">
+    <h4>💡 Conseils pour l'entretien</h4>
+    <ul>
+      <li>Privilégiez les questions ouvertes (Comment ? Pourquoi ? Parlez-moi de...)</li>
+      <li>Laissez des silences - l'utilisateur comblera souvent avec des infos précieuses</li>
+      <li>Rebondissez sur les réponses : "Pouvez-vous m'en dire plus ?"</li>
+      <li>Évitez les questions orientées ou qui suggèrent une réponse</li>
+      <li>Demandez des exemples concrets pour chaque affirmation</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <p>Template créé par UX Hub | Téléchargé depuis ux-hub.app</p>
+  </div>
+</body>
+</html>
+

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checklist Heuristiques de Nielsen - UX Hub</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.4; color: #333; max-width: 900px; margin: 0 auto; padding: 40px 20px; font-size: 13px; }
+    .header { border-bottom: 3px solid #3b82f6; padding-bottom: 15px; margin-bottom: 20px; }
+    .header h1 { color: #3b82f6; font-size: 22px; margin-bottom: 5px; }
+    .header p { color: #666; font-size: 13px; }
+    .meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+    .meta-item { background: #eff6ff; padding: 10px; border-radius: 6px; }
+    .meta-item label { font-size: 10px; text-transform: uppercase; color: #1d4ed8; display: block; margin-bottom: 3px; font-weight: 600; }
+    .meta-item input { border: none; background: transparent; width: 100%; font-size: 13px; }
+    
+    .heuristic { margin-bottom: 20px; page-break-inside: avoid; }
+    .heuristic-header { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; padding: 10px 15px; border-radius: 8px 8px 0 0; display: flex; align-items: center; gap: 10px; }
+    .heuristic-number { font-size: 20px; font-weight: bold; }
+    .heuristic-title { font-size: 14px; font-weight: 600; }
+    .heuristic-items { border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 8px 8px; padding: 10px; }
+    
+    .checklist-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 5px; border-bottom: 1px solid #f3f4f6; }
+    .checklist-item:last-child { border-bottom: none; }
+    .checkbox { width: 18px; height: 18px; border: 2px solid #d1d5db; border-radius: 4px; flex-shrink: 0; margin-top: 1px; }
+    .item-text { flex: 1; }
+    .severity { display: flex; gap: 3px; flex-shrink: 0; }
+    .severity span { width: 20px; height: 20px; border: 1px solid #d1d5db; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; color: #9ca3af; }
+    
+    .notes-section { margin-top: 25px; page-break-inside: avoid; }
+    .notes-title { background: #f3f4f6; padding: 10px 15px; font-weight: 600; border-left: 4px solid #3b82f6; margin-bottom: 10px; }
+    .notes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .notes-box { border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; }
+    .notes-box h4 { font-size: 12px; color: #1d4ed8; margin-bottom: 8px; }
+    .notes-box textarea { width: 100%; border: none; min-height: 80px; resize: none; font-size: 12px; }
+    
+    .summary-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 12px; }
+    .summary-table th, .summary-table td { border: 1px solid #e5e7eb; padding: 8px; text-align: center; }
+    .summary-table th { background: #f3f4f6; font-weight: 600; }
+    .summary-table td:first-child { text-align: left; }
+    
+    .legend { margin-top: 20px; padding: 15px; background: #fef3c7; border-radius: 8px; font-size: 11px; }
+    .legend h4 { color: #92400e; margin-bottom: 8px; }
+    .legend-items { display: flex; gap: 20px; flex-wrap: wrap; }
+    .legend-item { display: flex; align-items: center; gap: 5px; }
+    .legend-item .severity-dot { width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; }
+    .sev-1 { background: #dcfce7; color: #166534; }
+    .sev-2 { background: #fef9c3; color: #854d0e; }
+    .sev-3 { background: #fed7aa; color: #9a3412; }
+    .sev-4 { background: #fecaca; color: #991b1b; }
+    
+    .footer { margin-top: 30px; padding-top: 15px; border-top: 1px solid #e5e7eb; text-align: center; color: #9ca3af; font-size: 11px; }
+    
+    @media print {
+      body { padding: 20px; }
+      .heuristic { page-break-inside: avoid; }
+      #pdf-banner { display: none !important; }
+    }
+    @media screen {
+      body { padding-top: 90px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>✅ Checklist des 10 Heuristiques de Nielsen</h1>
+    <p>Grille d'audit heuristique pour évaluer l'utilisabilité d'une interface</p>
+  </div>
+
+  <div class="meta">
+    <div class="meta-item">
+      <label>Projet / Produit</label>
+      <input type="text" placeholder="Nom du projet...">
+    </div>
+    <div class="meta-item">
+      <label>Évaluateur</label>
+      <input type="text" placeholder="Votre nom...">
+    </div>
+    <div class="meta-item">
+      <label>Date</label>
+      <input type="text" placeholder="JJ/MM/AAAA">
+    </div>
+  </div>
+
+  <!-- Heuristique 1 -->
+  <div class="heuristic">
+    <div class="heuristic-header">
+      <span class="heuristic-number">1</span>
+      <span class="heuristic-title">Visibilité de l'état du système</span>
+    </div>
+    <div class="heuristic-items">
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Indicateurs de chargement présents pour les actions longues</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Messages de confirmation après les actions importantes</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Fil d'Ariane ou indication de position dans le parcours</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">État actif/sélectionné visible sur les éléments de navigation</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Progression visible dans les processus multi-étapes</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Heuristique 2 -->
+  <div class="heuristic">
+    <div class="heuristic-header">
+      <span class="heuristic-number">2</span>
+      <span class="heuristic-title">Correspondance entre système et monde réel</span>
+    </div>
+    <div class="heuristic-items">
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Vocabulaire adapté au public cible (pas de jargon technique)</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Icônes universellement comprises</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Formats de date/heure/devise localisés</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Flux logique correspondant aux attentes utilisateur</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Heuristique 3 -->
+  <div class="heuristic">
+    <div class="heuristic-header">
+      <span class="heuristic-number">3</span>
+      <span class="heuristic-title">Contrôle et liberté de l'utilisateur</span>
+    </div>
+    <div class="heuristic-items">
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Bouton "Annuler" ou "Retour" disponible</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Fonction Undo/Redo implémentée si pertinent</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Modales fermables par clic extérieur ou touche Escape</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Possibilité de sauter les étapes optionnelles (onboarding)</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Corbeille ou période de grâce avant suppression définitive</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Heuristique 4 -->
+  <div class="heuristic">
+    <div class="heuristic-header">
+      <span class="heuristic-number">4</span>
+      <span class="heuristic-title">Cohérence et standards</span>
+    </div>
+    <div class="heuristic-items">
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Logo cliquable ramenant à l'accueil</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Liens visuellement distinguables du texte</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Boutons primaires/secondaires cohérents dans toute l'app</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Conventions de la plateforme respectées (iOS/Android/Web)</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Vocabulaire identique pour les mêmes actions</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Heuristique 5 -->
+  <div class="heuristic">
+    <div class="heuristic-header">
+      <span class="heuristic-number">5</span>
+      <span class="heuristic-title">Prévention des erreurs</span>
+    </div>
+    <div class="heuristic-items">
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Boutons désactivés si conditions non remplies</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Confirmation demandée pour actions destructives</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Autocomplétion et suggestions de saisie</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Validation en temps réel des champs de formulaire</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Contraintes de format guidées (date picker, masques)</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Heuristique 6 -->
+  <div class="heuristic">
+    <div class="heuristic-header">
+      <span class="heuristic-number">6</span>
+      <span class="heuristic-title">Reconnaissance plutôt que rappel</span>
+    </div>
+    <div class="heuristic-items">
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Labels visibles (pas seulement placeholders)</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Historique des recherches et actions récentes</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Contexte toujours affiché (récapitulatif, sélection)</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Options importantes toujours visibles (pas de menu caché)</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Heuristique 7 -->
+  <div class="heuristic">
+    <div class="heuristic-header">
+      <span class="heuristic-number">7</span>
+      <span class="heuristic-title">Flexibilité et efficacité d'utilisation</span>
+    </div>
+    <div class="heuristic-items">
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Raccourcis clavier pour actions fréquentes</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Recherche et filtres avancés disponibles</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Interface adaptée aux novices ET experts</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Personnalisation possible (vue, préférences)</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Heuristique 8 -->
+  <div class="heuristic">
+    <div class="heuristic-header">
+      <span class="heuristic-number">8</span>
+      <span class="heuristic-title">Design esthétique et minimaliste</span>
+    </div>
+    <div class="heuristic-items">
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Contenu hiérarchisé (titres, sections)</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Espaces blancs suffisants pour la lisibilité</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Une seule action principale par écran</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Informations secondaires masquables (progressive disclosure)</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Pas d'éléments purement décoratifs qui distraient</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Heuristique 9 -->
+  <div class="heuristic">
+    <div class="heuristic-header">
+      <span class="heuristic-number">9</span>
+      <span class="heuristic-title">Aide à la reconnaissance et récupération des erreurs</span>
+    </div>
+    <div class="heuristic-items">
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Messages d'erreur en langage clair (pas de code)</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Indication visuelle du champ en erreur</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Solution proposée dans le message d'erreur</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Lien vers l'aide si erreur complexe</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Heuristique 10 -->
+  <div class="heuristic">
+    <div class="heuristic-header">
+      <span class="heuristic-number">10</span>
+      <span class="heuristic-title">Aide et documentation</span>
+    </div>
+    <div class="heuristic-items">
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Tooltips sur les éléments complexes</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Centre d'aide ou FAQ accessible</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Onboarding pour les nouveaux utilisateurs</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Aide contextuelle (liée à l'écran actuel)</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+      <div class="checklist-item">
+        <div class="checkbox"></div>
+        <div class="item-text">Contact support facilement trouvable</div>
+        <div class="severity"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Légende -->
+  <div class="legend">
+    <h4>📊 Échelle de sévérité (entourez le niveau pour chaque problème détecté)</h4>
+    <div class="legend-items">
+      <div class="legend-item">
+        <div class="severity-dot sev-1">1</div>
+        <span>Cosmétique - à corriger si temps</span>
+      </div>
+      <div class="legend-item">
+        <div class="severity-dot sev-2">2</div>
+        <span>Mineur - faible priorité</span>
+      </div>
+      <div class="legend-item">
+        <div class="severity-dot sev-3">3</div>
+        <span>Majeur - haute priorité</span>
+      </div>
+      <div class="legend-item">
+        <div class="severity-dot sev-4">4</div>
+        <span>Catastrophe - impératif</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tableau récapitulatif -->
+  <div class="notes-section">
+    <div class="notes-title">📋 Récapitulatif par heuristique</div>
+    <table class="summary-table">
+      <thead>
+        <tr>
+          <th>Heuristique</th>
+          <th>Nb problèmes</th>
+          <th>Sévérité max</th>
+          <th>Score /5</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1. Visibilité de l'état du système</td><td></td><td></td><td></td></tr>
+        <tr><td>2. Correspondance système/monde réel</td><td></td><td></td><td></td></tr>
+        <tr><td>3. Contrôle et liberté utilisateur</td><td></td><td></td><td></td></tr>
+        <tr><td>4. Cohérence et standards</td><td></td><td></td><td></td></tr>
+        <tr><td>5. Prévention des erreurs</td><td></td><td></td><td></td></tr>
+        <tr><td>6. Reconnaissance plutôt que rappel</td><td></td><td></td><td></td></tr>
+        <tr><td>7. Flexibilité et efficacité</td><td></td><td></td><td></td></tr>
+        <tr><td>8. Design esthétique et minimaliste</td><td></td><td></td><td></td></tr>
+        <tr><td>9. Récupération des erreurs</td><td></td><td></td><td></td></tr>
+        <tr><td>10. Aide et documentation</td><td></td><td></td><td></td></tr>
+        <tr style="font-weight: bold; background: #eff6ff;"><td>TOTAL</td><td></td><td></td><td>/50</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Notes -->
+  <div class="notes-section">
+    <div class="notes-title">📝 Notes et observations</div>
+    <div class="notes-grid">
+      <div class="notes-box">
+        <h4>🔴 Problèmes critiques (sévérité 4)</h4>
+        <textarea placeholder="Listez ici les problèmes bloquants..."></textarea>
+      </div>
+      <div class="notes-box">
+        <h4>🟠 Problèmes majeurs (sévérité 3)</h4>
+        <textarea placeholder="Listez ici les problèmes importants..."></textarea>
+      </div>
+      <div class="notes-box">
+        <h4>💡 Points positifs identifiés</h4>
+        <textarea placeholder="Ce qui fonctionne bien..."></textarea>
+      </div>
+      <div class="notes-box">
+        <h4>🎯 Recommandations prioritaires</h4>
+        <textarea placeholder="Actions à mener en priorité..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Checklist basée sur les 10 heuristiques de Jakob Nielsen (1994) | Template UX Hub</p>
+  </div>
+
+  <!-- Bandeau téléchargement PDF -->
+  <div id="pdf-banner" style="position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: white; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 9999;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <span style="font-size: 24px;">📄</span>
+      <div>
+        <strong style="font-size: 16px;">Enregistrer en PDF</strong>
+        <p style="font-size: 13px; opacity: 0.9; margin: 0;">Cliquez sur le bouton pour télécharger cette checklist au format PDF</p>
+      </div>
+    </div>
+    <div style="display: flex; gap: 10px;">
+      <button onclick="window.print()" style="background: white; color: #1d4ed8; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Télécharger PDF
+      </button>
+      <button onclick="document.getElementById('pdf-banner').style.display='none'" style="background: rgba(255,255,255,0.2); color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-size: 14px;">✕</button>
+    </div>
+  </div>
+</body>
+</html>
+

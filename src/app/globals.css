@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-surface-50 text-surface-900 antialiased;
+  }
+}
+
+@layer components {
+  .prose {
+    @apply text-surface-700 leading-relaxed;
+  }
+  
+  .prose h2 {
+    @apply text-xl font-display font-semibold text-surface-900 mt-6 mb-3;
+  }
+  
+  .prose h3 {
+    @apply text-lg font-display font-semibold text-surface-900 mt-4 mb-2;
+  }
+  
+  .prose p {
+    @apply mb-4;
+  }
+  
+  .prose ul {
+    @apply list-disc list-inside mb-4 space-y-1;
+  }
+  
+  .prose ol {
+    @apply list-decimal list-inside mb-4 space-y-1;
+  }
+  
+  .prose a {
+    @apply text-ux-600 hover:text-ux-700 underline;
+  }
+}

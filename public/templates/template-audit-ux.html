@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grille d'audit UX - UX Hub</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.5; color: #333; max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+    .header { border-bottom: 3px solid #f59e0b; padding-bottom: 20px; margin-bottom: 30px; }
+    .header h1 { color: #f59e0b; font-size: 24px; margin-bottom: 5px; }
+    .header p { color: #666; font-size: 14px; }
+    .meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 30px; }
+    .meta-item { background: #fffbeb; padding: 15px; border-radius: 8px; }
+    .meta-item label { font-size: 11px; text-transform: uppercase; color: #b45309; display: block; margin-bottom: 5px; }
+    .meta-item input { border: none; background: transparent; width: 100%; font-size: 14px; font-weight: 500; }
+    .section { margin-bottom: 30px; }
+    .section-title { background: #fffbeb; padding: 12px 15px; font-weight: 600; color: #b45309; margin-bottom: 15px; border-left: 4px solid #f59e0b; font-size: 16px; }
+    .heuristic { border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
+    .heuristic-header { background: #f9fafb; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; }
+    .heuristic-header h4 { font-size: 14px; color: #1f2937; }
+    .heuristic-header .score { display: flex; gap: 5px; }
+    .heuristic-header .score span { width: 24px; height: 24px; border: 1px solid #d1d5db; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; }
+    .heuristic-header .score span:hover { background: #fef3c7; }
+    .heuristic-header .score span.critical { background: #fee2e2; border-color: #fca5a5; color: #dc2626; }
+    .heuristic-header .score span.major { background: #ffedd5; border-color: #fdba74; color: #ea580c; }
+    .heuristic-header .score span.minor { background: #fef9c3; border-color: #fde047; color: #ca8a04; }
+    .heuristic-header .score span.ok { background: #dcfce7; border-color: #86efac; color: #16a34a; }
+    .heuristic-body { padding: 15px; }
+    .heuristic-body p { font-size: 13px; color: #6b7280; margin-bottom: 10px; }
+    .heuristic-body textarea { width: 100%; border: 1px solid #e5e7eb; border-radius: 4px; padding: 10px; font-size: 13px; min-height: 60px; resize: vertical; }
+    .heuristic-body .screenshot { border: 2px dashed #d1d5db; border-radius: 8px; padding: 20px; text-align: center; color: #9ca3af; font-size: 13px; margin-top: 10px; }
+    .legend { background: #f3f4f6; padding: 15px; border-radius: 8px; margin-bottom: 30px; }
+    .legend h4 { font-size: 14px; margin-bottom: 10px; }
+    .legend-items { display: flex; gap: 20px; flex-wrap: wrap; }
+    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+    .legend-item span { width: 20px; height: 20px; border-radius: 4px; }
+    .summary { margin-top: 30px; }
+    .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px; }
+    .summary-card { padding: 20px; border-radius: 8px; text-align: center; }
+    .summary-card.critical { background: #fee2e2; }
+    .summary-card.major { background: #ffedd5; }
+    .summary-card.minor { background: #fef9c3; }
+    .summary-card.ok { background: #dcfce7; }
+    .summary-card .count { font-size: 28px; font-weight: bold; }
+    .summary-card .label { font-size: 12px; color: #6b7280; }
+    .recommendations { border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; }
+    .recommendations h4 { margin-bottom: 15px; }
+    .recommendations textarea { width: 100%; border: 1px solid #e5e7eb; border-radius: 4px; padding: 10px; min-height: 100px; }
+    .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e7eb; text-align: center; color: #9ca3af; font-size: 12px; }
+    @media print { body { padding: 15px; font-size: 11px; } .heuristic { page-break-inside: avoid; } }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🔍 Grille d'audit UX</h1>
+    <p>Template UX Hub - Basé sur les 10 heuristiques de Nielsen</p>
+  </div>
+
+  <div class="meta">
+    <div class="meta-item">
+      <label>Produit audité</label>
+      <input type="text" placeholder="Nom du produit / URL">
+    </div>
+    <div class="meta-item">
+      <label>Date de l'audit</label>
+      <input type="text" placeholder="JJ/MM/AAAA">
+    </div>
+    <div class="meta-item">
+      <label>Auditeur</label>
+      <input type="text" placeholder="Votre nom">
+    </div>
+    <div class="meta-item">
+      <label>Périmètre</label>
+      <input type="text" placeholder="Ex: Parcours d'inscription">
+    </div>
+  </div>
+
+  <div class="legend">
+    <h4>Échelle de sévérité</h4>
+    <div class="legend-items">
+      <div class="legend-item"><span style="background: #fee2e2;"></span> 0 - Critique (bloquant)</div>
+      <div class="legend-item"><span style="background: #ffedd5;"></span> 1 - Majeur (impact fort)</div>
+      <div class="legend-item"><span style="background: #fef9c3;"></span> 2 - Mineur (gêne légère)</div>
+      <div class="legend-item"><span style="background: #dcfce7;"></span> 3 - OK (conforme)</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Les 10 heuristiques de Nielsen</div>
+
+    <div class="heuristic">
+      <div class="heuristic-header">
+        <h4>1. Visibilité de l'état du système</h4>
+        <div class="score">
+          <span class="critical">0</span>
+          <span class="major">1</span>
+          <span class="minor">2</span>
+          <span class="ok">3</span>
+        </div>
+      </div>
+      <div class="heuristic-body">
+        <p>Le système informe-t-il l'utilisateur de ce qui se passe en temps réel ? (chargement, progression, confirmation...)</p>
+        <textarea placeholder="Observations et problèmes identifiés..."></textarea>
+        <div class="screenshot">📷 Espace pour capture d'écran</div>
+      </div>
+    </div>
+
+    <div class="heuristic">
+      <div class="heuristic-header">
+        <h4>2. Correspondance système / monde réel</h4>
+        <div class="score">
+          <span class="critical">0</span>
+          <span class="major">1</span>
+          <span class="minor">2</span>
+          <span class="ok">3</span>
+        </div>
+      </div>
+      <div class="heuristic-body">
+        <p>Le système utilise-t-il le langage de l'utilisateur ? Les concepts sont-ils familiers ?</p>
+        <textarea placeholder="Observations et problèmes identifiés..."></textarea>
+        <div class="screenshot">📷 Espace pour capture d'écran</div>
+      </div>
+    </div>
+
+    <div class="heuristic">
+      <div class="heuristic-header">
+        <h4>3. Contrôle et liberté de l'utilisateur</h4>
+        <div class="score">
+          <span class="critical">0</span>
+          <span class="major">1</span>
+          <span class="minor">2</span>
+          <span class="ok">3</span>
+        </div>
+      </div>
+      <div class="heuristic-body">
+        <p>L'utilisateur peut-il annuler, revenir en arrière, quitter facilement ? Y a-t-il des "sorties de secours" ?</p>
+        <textarea placeholder="Observations et problèmes identifiés..."></textarea>
+        <div class="screenshot">📷 Espace pour capture d'écran</div>
+      </div>
+    </div>
+
+    <div class="heuristic">
+      <div class="heuristic-header">
+        <h4>4. Cohérence et standards</h4>
+        <div class="score">
+          <span class="critical">0</span>
+          <span class="major">1</span>
+          <span class="minor">2</span>
+          <span class="ok">3</span>
+        </div>
+      </div>
+      <div class="heuristic-body">
+        <p>L'interface est-elle cohérente ? Respecte-t-elle les conventions du domaine ?</p>
+        <textarea placeholder="Observations et problèmes identifiés..."></textarea>
+        <div class="screenshot">📷 Espace pour capture d'écran</div>
+      </div>
+    </div>
+
+    <div class="heuristic">
+      <div class="heuristic-header">
+        <h4>5. Prévention des erreurs</h4>
+        <div class="score">
+          <span class="critical">0</span>
+          <span class="major">1</span>
+          <span class="minor">2</span>
+          <span class="ok">3</span>
+        </div>
+      </div>
+      <div class="heuristic-body">
+        <p>Le système prévient-il les erreurs ? (confirmation avant suppression, validation en temps réel...)</p>
+        <textarea placeholder="Observations et problèmes identifiés..."></textarea>
+        <div class="screenshot">📷 Espace pour capture d'écran</div>
+      </div>
+    </div>
+
+    <div class="heuristic">
+      <div class="heuristic-header">
+        <h4>6. Reconnaissance plutôt que rappel</h4>
+        <div class="score">
+          <span class="critical">0</span>
+          <span class="major">1</span>
+          <span class="minor">2</span>
+          <span class="ok">3</span>
+        </div>
+      </div>
+      <div class="heuristic-body">
+        <p>Les informations nécessaires sont-elles visibles ? L'utilisateur doit-il se souvenir d'éléments ?</p>
+        <textarea placeholder="Observations et problèmes identifiés..."></textarea>
+        <div class="screenshot">📷 Espace pour capture d'écran</div>
+      </div>
+    </div>
+
+    <div class="heuristic">
+      <div class="heuristic-header">
+        <h4>7. Flexibilité et efficacité d'utilisation</h4>
+        <div class="score">
+          <span class="critical">0</span>
+          <span class="major">1</span>
+          <span class="minor">2</span>
+          <span class="ok">3</span>
+        </div>
+      </div>
+      <div class="heuristic-body">
+        <p>Y a-t-il des raccourcis pour les utilisateurs experts ? Le système s'adapte-t-il aux différents profils ?</p>
+        <textarea placeholder="Observations et problèmes identifiés..."></textarea>
+        <div class="screenshot">📷 Espace pour capture d'écran</div>
+      </div>
+    </div>
+
+    <div class="heuristic">
+      <div class="heuristic-header">
+        <h4>8. Design esthétique et minimaliste</h4>
+        <div class="score">
+          <span class="critical">0</span>
+          <span class="major">1</span>
+          <span class="minor">2</span>
+          <span class="ok">3</span>
+        </div>
+      </div>
+      <div class="heuristic-body">
+        <p>L'interface est-elle épurée ? Y a-t-il des informations non pertinentes qui distraient ?</p>
+        <textarea placeholder="Observations et problèmes identifiés..."></textarea>
+        <div class="screenshot">📷 Espace pour capture d'écran</div>
+      </div>
+    </div>
+
+    <div class="heuristic">
+      <div class="heuristic-header">
+        <h4>9. Aide à la reconnaissance et correction des erreurs</h4>
+        <div class="score">
+          <span class="critical">0</span>
+          <span class="major">1</span>
+          <span class="minor">2</span>
+          <span class="ok">3</span>
+        </div>
+      </div>
+      <div class="heuristic-body">
+        <p>Les messages d'erreur sont-ils clairs, précis et proposent-ils une solution ?</p>
+        <textarea placeholder="Observations et problèmes identifiés..."></textarea>
+        <div class="screenshot">📷 Espace pour capture d'écran</div>
+      </div>
+    </div>
+
+    <div class="heuristic">
+      <div class="heuristic-header">
+        <h4>10. Aide et documentation</h4>
+        <div class="score">
+          <span class="critical">0</span>
+          <span class="major">1</span>
+          <span class="minor">2</span>
+          <span class="ok">3</span>
+        </div>
+      </div>
+      <div class="heuristic-body">
+        <p>Une aide est-elle disponible ? Est-elle facile à trouver et à comprendre ?</p>
+        <textarea placeholder="Observations et problèmes identifiés..."></textarea>
+        <div class="screenshot">📷 Espace pour capture d'écran</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary">
+    <div class="section-title">Synthèse de l'audit</div>
+    <div class="summary-grid">
+      <div class="summary-card critical">
+        <div class="count">_</div>
+        <div class="label">Problèmes critiques</div>
+      </div>
+      <div class="summary-card major">
+        <div class="count">_</div>
+        <div class="label">Problèmes majeurs</div>
+      </div>
+      <div class="summary-card minor">
+        <div class="count">_</div>
+        <div class="label">Problèmes mineurs</div>
+      </div>
+      <div class="summary-card ok">
+        <div class="count">_</div>
+        <div class="label">Points conformes</div>
+      </div>
+    </div>
+
+    <div class="recommendations">
+      <h4>📋 Recommandations prioritaires</h4>
+      <textarea placeholder="Top 5 des actions à mener en priorité..."></textarea>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Template créé par UX Hub | Téléchargé depuis ux-hub.app</p>
+  </div>
+</body>
+</html>
+

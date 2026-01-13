@@ -1,0 +1,165 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  avatar    String?
+  role      String   @default("READER")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  projects         Project[]
+  resources        Resource[]
+  feedbackRequests FeedbackRequest[]
+  feedbackGiven    Feedback[]
+  officeHours      OfficeHour[]
+  bookings         Booking[]
+  quickWins        QuickWin[]
+}
+
+model Category {
+  id          String     @id @default(cuid())
+  name        String
+  slug        String     @unique
+  description String?
+  icon        String?
+  color       String?
+  resources   Resource[]
+}
+
+model Resource {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  content     String
+  excerpt     String?
+  type        String    @default("GUIDE")
+  tags        String    @default("[]")
+  pinned      Boolean   @default(false)
+  viewCount   Int       @default(0)
+  version     Int       @default(1)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  createdById String
+  createdBy   User   @relation(fields: [createdById], references: [id])
+}
+
+model Project {
+  id              String    @id @default(cuid())
+  title           String
+  description     String
+  team            String
+  startDate       DateTime
+  endDate         DateTime?
+  status          String    @default("IN_PROGRESS")
+  tags            String    @default("[]")
+  context         String?
+  analysis        String?
+  recommendations String?
+  images          String    @default("[]")
+  externalLinks   String    @default("[]")
+  metrics         String    @default("{}")
+  featured        Boolean   @default(false)
+  viewCount       Int       @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  createdById String
+  createdBy   User   @relation(fields: [createdById], references: [id])
+
+  feedbackRequests FeedbackRequest[]
+}
+
+model FeedbackRequest {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  fileUrl     String?
+  figmaUrl    String?
+  deadline    DateTime
+  status      String   @default("PENDING")
+  priority    String   @default("MEDIUM")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  projectId   String?
+  project     Project? @relation(fields: [projectId], references: [id])
+  requesterId String
+  requester   User     @relation(fields: [requesterId], references: [id])
+
+  feedbacks Feedback[]
+}
+
+model Feedback {
+  id        String   @id @default(cuid())
+  content   String
+  rating    Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  requestId String
+  request   FeedbackRequest @relation(fields: [requestId], references: [id])
+  authorId  String
+  author    User            @relation(fields: [authorId], references: [id])
+}
+
+model OfficeHour {
+  id               String   @id @default(cuid())
+  title            String
+  description      String?
+  consultationType String   @default("REVIEW")
+  date             DateTime
+  startTime        String
+  endTime          String
+  maxBookings      Int      @default(1)
+  isRecurring      Boolean  @default(false)
+  recurringDays    String   @default("[]")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  hostId   String
+  host     User      @relation(fields: [hostId], references: [id])
+  bookings Booking[]
+}
+
+model Booking {
+  id        String   @id @default(cuid())
+  topic     String
+  notes     String?
+  status    String   @default("CONFIRMED")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  officeHourId String
+  officeHour   OfficeHour @relation(fields: [officeHourId], references: [id])
+  attendeeId   String
+  attendee     User       @relation(fields: [attendeeId], references: [id])
+}
+
+model QuickWin {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  impact      String
+  effort      String
+  status      String    @default("IDENTIFIED")
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  createdById String
+  createdBy   User   @relation(fields: [createdById], references: [id])
+}

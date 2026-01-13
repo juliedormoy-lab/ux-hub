@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parcours utilisateur (Journey Map) - UX Hub</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.5; color: #333; max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    .header { border-bottom: 3px solid #0ea5e9; padding-bottom: 20px; margin-bottom: 30px; }
+    .header h1 { color: #0ea5e9; font-size: 24px; margin-bottom: 5px; }
+    .header p { color: #666; font-size: 14px; }
+    .meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
+    .meta-item { background: #f0f9ff; padding: 15px; border-radius: 8px; }
+    .meta-item label { font-size: 11px; text-transform: uppercase; color: #0369a1; display: block; margin-bottom: 5px; }
+    .meta-item input { border: none; background: transparent; width: 100%; font-size: 14px; font-weight: 500; }
+    .journey-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+    .journey-table th { background: #0ea5e9; color: white; padding: 12px; text-align: left; font-size: 13px; }
+    .journey-table td { border: 1px solid #e5e7eb; padding: 12px; vertical-align: top; }
+    .journey-table .phase-header { background: #f0f9ff; font-weight: 600; color: #0369a1; text-align: center; }
+    .journey-table textarea { width: 100%; border: none; resize: vertical; min-height: 60px; font-size: 13px; }
+    .journey-table input { width: 100%; border: none; font-size: 13px; padding: 5px 0; }
+    .emotion-scale { display: flex; justify-content: space-around; padding: 10px 0; }
+    .emotion { font-size: 24px; opacity: 0.3; cursor: pointer; }
+    .emotion:hover, .emotion.active { opacity: 1; }
+    .row-label { background: #f9fafb; font-weight: 500; color: #374151; width: 120px; }
+    .pain-point { background: #fef2f2; }
+    .opportunity { background: #f0fdf4; }
+    .touchpoint { background: #fffbeb; }
+    .section { margin-bottom: 30px; }
+    .section-title { font-size: 16px; font-weight: 600; color: #1f2937; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #e5e7eb; }
+    .insights-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .insight-card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 15px; }
+    .insight-card h4 { font-size: 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .insight-card textarea { width: 100%; border: 1px solid #e5e7eb; border-radius: 4px; padding: 10px; min-height: 80px; font-size: 13px; resize: vertical; }
+    .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e7eb; text-align: center; color: #9ca3af; font-size: 12px; }
+    @media print { 
+      body { padding: 10px; font-size: 11px; } 
+      .journey-table { font-size: 10px; }
+      .journey-table td, .journey-table th { padding: 6px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🗺️ Parcours utilisateur (Journey Map)</h1>
+    <p>Template UX Hub - Méthode : Parcours utilisateur</p>
+  </div>
+
+  <div class="meta">
+    <div class="meta-item">
+      <label>Persona concerné</label>
+      <input type="text" placeholder="Ex: Marie, Chef de projet">
+    </div>
+    <div class="meta-item">
+      <label>Parcours analysé</label>
+      <input type="text" placeholder="Ex: Souscription à un service">
+    </div>
+    <div class="meta-item">
+      <label>Date / Version</label>
+      <input type="text" placeholder="Ex: v1.0 - Janvier 2024">
+    </div>
+  </div>
+
+  <table class="journey-table">
+    <thead>
+      <tr>
+        <th style="width: 120px;"></th>
+        <th class="phase-header">Phase 1</th>
+        <th class="phase-header">Phase 2</th>
+        <th class="phase-header">Phase 3</th>
+        <th class="phase-header">Phase 4</th>
+        <th class="phase-header">Phase 5</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="row-label">📍 Étape</td>
+        <td><input type="text" placeholder="Découverte"></td>
+        <td><input type="text" placeholder="Considération"></td>
+        <td><input type="text" placeholder="Décision"></td>
+        <td><input type="text" placeholder="Achat/Action"></td>
+        <td><input type="text" placeholder="Après"></td>
+      </tr>
+      <tr>
+        <td class="row-label">🎯 Objectif utilisateur</td>
+        <td><textarea placeholder="Ce que l'utilisateur cherche à accomplir..."></textarea></td>
+        <td><textarea placeholder="Ce que l'utilisateur cherche à accomplir..."></textarea></td>
+        <td><textarea placeholder="Ce que l'utilisateur cherche à accomplir..."></textarea></td>
+        <td><textarea placeholder="Ce que l'utilisateur cherche à accomplir..."></textarea></td>
+        <td><textarea placeholder="Ce que l'utilisateur cherche à accomplir..."></textarea></td>
+      </tr>
+      <tr>
+        <td class="row-label">✋ Actions</td>
+        <td><textarea placeholder="Ce que l'utilisateur fait..."></textarea></td>
+        <td><textarea placeholder="Ce que l'utilisateur fait..."></textarea></td>
+        <td><textarea placeholder="Ce que l'utilisateur fait..."></textarea></td>
+        <td><textarea placeholder="Ce que l'utilisateur fait..."></textarea></td>
+        <td><textarea placeholder="Ce que l'utilisateur fait..."></textarea></td>
+      </tr>
+      <tr class="touchpoint">
+        <td class="row-label">📱 Points de contact</td>
+        <td><textarea placeholder="Site web, app, email, téléphone..."></textarea></td>
+        <td><textarea placeholder="Site web, app, email, téléphone..."></textarea></td>
+        <td><textarea placeholder="Site web, app, email, téléphone..."></textarea></td>
+        <td><textarea placeholder="Site web, app, email, téléphone..."></textarea></td>
+        <td><textarea placeholder="Site web, app, email, téléphone..."></textarea></td>
+      </tr>
+      <tr>
+        <td class="row-label">💭 Pensées</td>
+        <td><textarea placeholder="Ce que l'utilisateur pense..."></textarea></td>
+        <td><textarea placeholder="Ce que l'utilisateur pense..."></textarea></td>
+        <td><textarea placeholder="Ce que l'utilisateur pense..."></textarea></td>
+        <td><textarea placeholder="Ce que l'utilisateur pense..."></textarea></td>
+        <td><textarea placeholder="Ce que l'utilisateur pense..."></textarea></td>
+      </tr>
+      <tr>
+        <td class="row-label">😊 Émotion</td>
+        <td>
+          <div class="emotion-scale">
+            <span class="emotion">😫</span>
+            <span class="emotion">😕</span>
+            <span class="emotion">😐</span>
+            <span class="emotion">🙂</span>
+            <span class="emotion">😄</span>
+          </div>
+        </td>
+        <td>
+          <div class="emotion-scale">
+            <span class="emotion">😫</span>
+            <span class="emotion">😕</span>
+            <span class="emotion">😐</span>
+            <span class="emotion">🙂</span>
+            <span class="emotion">😄</span>
+          </div>
+        </td>
+        <td>
+          <div class="emotion-scale">
+            <span class="emotion">😫</span>
+            <span class="emotion">😕</span>
+            <span class="emotion">😐</span>
+            <span class="emotion">🙂</span>
+            <span class="emotion">😄</span>
+          </div>
+        </td>
+        <td>
+          <div class="emotion-scale">
+            <span class="emotion">😫</span>
+            <span class="emotion">😕</span>
+            <span class="emotion">😐</span>
+            <span class="emotion">🙂</span>
+            <span class="emotion">😄</span>
+          </div>
+        </td>
+        <td>
+          <div class="emotion-scale">
+            <span class="emotion">😫</span>
+            <span class="emotion">😕</span>
+            <span class="emotion">😐</span>
+            <span class="emotion">🙂</span>
+            <span class="emotion">😄</span>
+          </div>
+        </td>
+      </tr>
+      <tr class="pain-point">
+        <td class="row-label">❌ Pain points</td>
+        <td><textarea placeholder="Difficultés, frustrations..."></textarea></td>
+        <td><textarea placeholder="Difficultés, frustrations..."></textarea></td>
+        <td><textarea placeholder="Difficultés, frustrations..."></textarea></td>
+        <td><textarea placeholder="Difficultés, frustrations..."></textarea></td>
+        <td><textarea placeholder="Difficultés, frustrations..."></textarea></td>
+      </tr>
+      <tr class="opportunity">
+        <td class="row-label">💡 Opportunités</td>
+        <td><textarea placeholder="Améliorations possibles..."></textarea></td>
+        <td><textarea placeholder="Améliorations possibles..."></textarea></td>
+        <td><textarea placeholder="Améliorations possibles..."></textarea></td>
+        <td><textarea placeholder="Améliorations possibles..."></textarea></td>
+        <td><textarea placeholder="Améliorations possibles..."></textarea></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section">
+    <div class="section-title">Synthèse et prochaines étapes</div>
+    <div class="insights-grid">
+      <div class="insight-card">
+        <h4>🔴 Top 3 Pain Points</h4>
+        <textarea placeholder="1. &#10;2. &#10;3. "></textarea>
+      </div>
+      <div class="insight-card">
+        <h4>🟢 Top 3 Opportunités</h4>
+        <textarea placeholder="1. &#10;2. &#10;3. "></textarea>
+      </div>
+      <div class="insight-card">
+        <h4>⚡ Quick wins identifiés</h4>
+        <textarea placeholder="Actions rapides à fort impact..."></textarea>
+      </div>
+      <div class="insight-card">
+        <h4>📋 Actions prioritaires</h4>
+        <textarea placeholder="Prochaines étapes recommandées..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Template créé par UX Hub | Téléchargé depuis ux-hub.app</p>
+  </div>
+</body>
+</html>
+
