@@ -19,13 +19,24 @@ import {
   ChatBubbleLeftEllipsisIcon,
   NewspaperIcon,
 } from '@heroicons/react/24/outline'
+import { ForwardRefExoticComponent, SVGProps, RefAttributes } from 'react'
+
+type NavIcon = ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, 'ref'> & { title?: string; titleId?: string } & RefAttributes<SVGSVGElement>>
+
+interface NavItem {
+  name: string
+  href: string
+  icon: NavIcon
+  badgeText?: string
+  badgeColor?: 'blue' | 'purple' | 'pink' | 'indigo'
+}
 
 export function Sidebar() {
   const pathname = usePathname()
   const { sidebarOpen, setSidebarOpen, locale } = useAppStore()
   const t = getTranslation(locale)
 
-  const navigation = [
+  const navigation: NavItem[] = [
     { name: t.nav.home, href: '/', icon: HomeIcon },
     { name: locale === 'fr' ? 'Guide d\'intégration UX' : 'UX Integration Guide', href: '/guide', icon: AcademicCapIcon },
     { name: t.nav.methods, href: '/methodes', icon: LightBulbIcon },
@@ -36,7 +47,7 @@ export function Sidebar() {
     { name: t.nav.faq, href: '/faq', icon: QuestionMarkCircleIcon },
   ]
 
-  const bottomNavigation = [
+  const bottomNavigation: NavItem[] = [
     { name: t.nav.contact, href: '/contact', icon: EnvelopeIcon },
     { name: locale === 'fr' ? 'Feedback' : 'Feedback', href: '/feedback', icon: ChatBubbleLeftEllipsisIcon },
     { name: 'Admin', href: '/admin-ux-analytics', icon: ChartBarIcon },

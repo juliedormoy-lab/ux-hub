@@ -40,24 +40,24 @@ export default function ProjectDetailPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    const fetchProject = async () => {
+      try {
+        const res = await fetch(`/api/projects/${id}`)
+        if (res.ok) {
+          const data = await res.json()
+          setProject(data)
+        }
+      } catch (error) {
+        console.error('Error fetching project:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
     if (id) {
       fetchProject()
     }
   }, [id])
-
-  const fetchProject = async () => {
-    try {
-      const res = await fetch(`/api/projects/${id}`)
-      if (res.ok) {
-        const data = await res.json()
-        setProject(data)
-      }
-    } catch (error) {
-      console.error('Error fetching project:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   if (loading) {
     return (

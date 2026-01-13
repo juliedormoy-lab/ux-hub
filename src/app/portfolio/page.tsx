@@ -2,7 +2,6 @@
 
 import { MainLayout } from '@/components/layout'
 import { Card, Button, Badge, StatusBadge } from '@/components/ui'
-import { useAppStore } from '@/store'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import {
@@ -11,7 +10,6 @@ import {
   FunnelIcon,
   CalendarIcon,
   EyeIcon,
-  InformationCircleIcon,
 } from '@heroicons/react/24/outline'
 import { formatDate, parseJSON } from '@/lib/utils'
 
@@ -28,29 +26,26 @@ interface Project {
 }
 
 export default function PortfolioPage() {
-  const { currentUser } = useAppStore()
   const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('all')
 
-  const canCreate = currentUser?.role === 'ADMIN' || currentUser?.role === 'CONTRIBUTOR'
-
   useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const res = await fetch('/api/projects')
+        const data = await res.json()
+        setProjects(data)
+      } catch (error) {
+        console.error('Error fetching projects:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
     fetchProjects()
   }, [])
-
-  const fetchProjects = async () => {
-    try {
-      const res = await fetch('/api/projects')
-      const data = await res.json()
-      setProjects(data)
-    } catch (error) {
-      console.error('Error fetching projects:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   const filteredProjects = projects.filter((project) => {
     const matchesSearch = project.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -71,21 +66,11 @@ export default function PortfolioPage() {
       title="Portfolio"
       subtitle="Showcase de vos projets et analyses UX"
       actions={
-        <Button leftIcon={<PlusIcon className="h-4 w-4" />} disabled={!canCreate}>
+        <Button leftIcon={<PlusIcon className="h-4 w-4" />}>
           Nouveau projet
         </Button>
       }
     >
-      {/* Reader notice */}
-      {currentUser?.role === 'READER' && (
-        <div className="mb-6 p-4 bg-ux-50 border border-ux-200 rounded-xl flex items-start gap-3">
-          <InformationCircleIcon className="h-5 w-5 text-ux-600 flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-ux-700">
-            <strong>Mode lecture</strong> — Vous consultez le portfolio en tant que lecteur. Seuls les administrateurs peuvent créer et modifier des projets.
-          </p>
-        </div>
-      )}
-
       {/* Search and filters */}
       <div className="flex flex-col sm:flex-row gap-4 mb-6">
         <div className="relative flex-1">

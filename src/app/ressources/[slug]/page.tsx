@@ -45,24 +45,24 @@ export default function ResourceDetailPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    const fetchResource = async () => {
+      try {
+        const res = await fetch(`/api/resources/${slug}`)
+        if (res.ok) {
+          const data = await res.json()
+          setResource(data)
+        }
+      } catch (error) {
+        console.error('Error:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
     if (slug) {
       fetchResource()
     }
   }, [slug])
-
-  const fetchResource = async () => {
-    try {
-      const res = await fetch(`/api/resources/${slug}`)
-      if (res.ok) {
-        const data = await res.json()
-        setResource(data)
-      }
-    } catch (error) {
-      console.error('Error:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href)
